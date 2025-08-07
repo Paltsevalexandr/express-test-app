@@ -7,23 +7,6 @@ app.use(cors());
 app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
 
-
-// const data = [
-//     {
-//         loginId: "user1",
-//         buildNumber: 1,
-//         numberOfParts: 34,
-//         timePerPart: 1
-//     },
-//     {
-//         loginId: "user2",
-//         buildNumber: 2,
-//         numberOfParts: 12,
-//         timePerPart: 15
-//     }
-    
-// ];
-
 app.post('/get-build-data', async (req, res) => {
     let errors =[];
     let body = req.body;
@@ -66,6 +49,34 @@ app.post('/get-build-data', async (req, res) => {
         console.log(error);
         res.status(400).json(error);
     }
+});
+
+app.get('/start', async (req, res) => {
+    const now = knex.fn.now();
+    const query = req.query;
+    const { login_id } = query;
+    let sessionId = null;
+    let session = await knex("sessions")
+        .where({ login_id })
+        .first();
+    if (session) {
+        sessionId = await knex("sessions")
+            .where({ login_id })
+            .update({ session_start: now });
+        console.log("11", sessionId)
+    }
+    else {
+        const [_sessionId] = await knex("sessions").insert({
+            login_id,
+            session_start: now
+        });
+        sessionId = _sessionId;
+    }
+    
+    session = await knex("sessions")
+        .where({ id: sessionId })
+        .first();
+    res.status(200).json({time: session.session_start})
 });
 
 const port = 5000;
