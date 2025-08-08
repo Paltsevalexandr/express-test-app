@@ -63,7 +63,6 @@ app.get('/start', async (req, res) => {
         sessionId = await knex("sessions")
             .where({ login_id })
             .update({ session_start: now });
-        console.log("11", sessionId)
     }
     else {
         const [_sessionId] = await knex("sessions").insert({
