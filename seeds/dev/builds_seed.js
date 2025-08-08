@@ -11,14 +11,14 @@ exports.seed = async function(knex) {
 		login_id: 'user1',
 		build_number: 1,
 		number_of_parts: 5,
-      	time_per_part: 11
+      	time_per_part: 1
     },
     {
 		id: 2,
 		login_id: 'user2',
 		build_number: 2,
 		number_of_parts: 6,
-      	time_per_part: 22
+      	time_per_part: 31
     },
     {
 		id: 3,
