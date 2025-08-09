@@ -21,14 +21,15 @@ database requests.
 
 2. Install dependencies:
    npm install
-3. Create database:
-a. mysql -u root -p
+
+Create database:
+1. mysql -u root -p
 "root" should be replaced with DB user name.
 When prompted enter password for mysql user.
-b. CREATE DATABASE myapp_test;
-c. EXIT;
-d. to create all the tables -  knex migrate:latest
-e. to seed the database -   knex seed:run
+2. CREATE DATABASE myapp_test;
+3. EXIT;
+4. to create all the tables -  knex migrate:latest
+5. to seed the database -   knex seed:run
 ### Running the App
 
 Start the development server:
