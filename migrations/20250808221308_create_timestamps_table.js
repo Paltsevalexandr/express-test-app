@@ -2,12 +2,12 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = function (knex) {
-    return knex.schema.createTable('sessions', (table) => {
+exports.up = function(knex) {
+    return knex.schema.dropTableIfExists('timestamps').createTable('timestamps', (table) => {
         table.increments("id").primary();
-        table.string("login_id").notNullable();
-        table.timestamp("session_start").notNullable();
-        table.integer("elapsed_seconds").defaultTo(0);
+        table.integer("session_id").notNullable().unsigned().references('id').inTable('sessions').onDelete('CASCADE');
+        table.timestamp("timestamp").notNullable();
+        table.integer("type");
         table.timestamp("created_at").defaultTo(knex.fn.now());
         table.timestamp("updated_at").defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
     });
@@ -18,5 +18,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-  return knex.schema.dropTable("sessions");
+  return knex.schema.dropTable("timestamps");
 };

@@ -5,7 +5,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable('builds', (table) => {
         table.increments("id").primary();
-        table.string("login_id").notNullable().unique();
+        table.string("login_id").notNullable();
         table.integer("build_number").notNullable().unique();
         table.integer("number_of_parts").notNullable();
         table.integer("time_per_part").notNullable();

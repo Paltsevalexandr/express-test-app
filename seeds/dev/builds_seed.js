@@ -17,8 +17,8 @@ exports.seed = async function(knex) {
 		id: 2,
 		login_id: 'user2',
 		build_number: 2,
-		number_of_parts: 6,
-      	time_per_part: 31
+		number_of_parts: 1,
+      	time_per_part: 1
     },
     {
 		id: 3,
