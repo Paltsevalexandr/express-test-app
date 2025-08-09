@@ -272,12 +272,6 @@ app.get("/save-defects", async (req, res) => {
         const query = req.query;
         const { defects_amount, session_id } = query;
         
-        // await knex("sessions")
-        //     .where({ id: session_id })
-        //     .update({
-        //         status: 2 // finished
-        //     });
-        
         let defectsObj = await knex("defects")
             .where({ session_id })
             .first();
@@ -285,7 +279,11 @@ app.get("/save-defects", async (req, res) => {
         if (defectsObj) {
             await knex("defects")
             .where({ id: defectsObj.id })
-            .update({ defects_amount });
+                .update({ defects_amount });
+            
+            await knex("sessions")
+                .where({ id: session_id })
+                .update({ submission_type: "manual" });
         }
         else {
             await knex("defects").insert({
@@ -322,7 +320,8 @@ app.get("/save-session", async (req, res) => {
             .andWhere({status: 1})
             .update({
                 status: 2, // finished
-                total_parts
+                total_parts,
+                submission_type: "auto"
             });
         
         let result = await knex('sessions')
