@@ -13,6 +13,23 @@ database requests.
 ## Features
 - JSON request/response handling
 
+## Database structure
+The database contains following tables:
+- users
+- builds (with login_id which is related to users table's login_id)
+- sessions (with user_id foreign key, related to id of the row in users table,
+   one-to-many relation)
+- timestamps (with session_id foreign key, related to id of the row in sessions table, 
+   one-to-many relation). Contains data about the pause, resume and popup interaction time. The "type" column reflects the type of row: 1-pause, 2-resume, 3-extended time
+   from popup.
+- defects - amount of defects related to session (with session_id foreign key, related
+   to id of the row in sessions table, one-to-one relation)
+
+Note: 
+the project contains migrations files and seed files which
+are using to create tables in database and fill "users" and "builds" tables
+with mocked data.
+
 ### Installation
 
 1. Clone the repository:
