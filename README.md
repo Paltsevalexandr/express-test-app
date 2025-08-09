@@ -36,4 +36,4 @@ Start the development server:
 ```bash
 node server
 ```
-The server will run on [http://localhost:5000] by default.
+The server will run on [http://localhost:5000].
