@@ -171,10 +171,8 @@ app.get('/reset-session', async (req, res) => {
             .where({ id: session_id })
             .andWhere({ status: 1 })
             .update({
-                elapsed_seconds: 0,
-                is_paused: 0,
-                total_paused_time: 0,
-                pause_start: null
+                status: 2,
+                submission_type: "auto"
             });
         
         await knex("defects")
@@ -206,7 +204,7 @@ app.get('/toggle-session', async (req, res) => {
             .where({ login_id })
             .andWhere({ status: 1 })
             .first();
-        const isPausedValue = is_paused == "true" ;
+        const isPausedValue = is_paused == "true";
         let updatedSession = { is_paused: isPausedValue ? 1 : 0 };
         let now = knex.fn.now();
         if (isPausedValue) {
@@ -290,6 +288,10 @@ app.get("/save-defects", async (req, res) => {
                 session_id,
                 defects_amount
             });
+
+            await knex("sessions")
+                .where({ id: session_id })
+                .update({ submission_type: "manual" });
         }
         let result = await knex('defects').where({ session_id }).first();
 
