@@ -307,6 +307,40 @@ app.get("/save-defects", async (req, res) => {
     }
 });
 
+app.get("/save-session", async (req, res) => {
+    try {
+        const query = req.query;
+        const { total_parts, login_id } = query;
+        const session = await knex("sessions")
+            .where({ login_id })
+            .andWhere({ status: 1 })
+            .first();
+        
+        await knex("sessions")
+            .where({ login_id })
+            .andWhere({status: 1})
+            .update({
+                status: 2, // finished
+                total_parts
+            });
+        
+        let result = await knex('sessions')
+            .where({ id: session.id })
+            .first();
+
+        if (result) {
+            res.status(200).json({ success: true });
+        }
+        else {
+            res.status(400).json({ error: "error1", success: false });
+        }
+    }
+    catch (error) {
+        console.log(error);
+        res.status(400).json({ error: "error2", success: false });
+    }
+});
+
 const TimestampType = Object.freeze({
     PAUSE: 1,
     RESUME: 2,
