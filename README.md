@@ -22,6 +22,11 @@ database requests.
 2. Install dependencies:
    npm install
 
+3. Modify knexfile.js
+   To let the to connect to the database you need to modify
+   knexfile.js. Change port, user and password fields to
+   match your credentials.
+
 Create database:
 1. mysql -u root -p
 "root" should be replaced with DB user name.
@@ -30,6 +35,8 @@ When prompted enter password for mysql user.
 3. EXIT;
 4. to create all the tables -  knex migrate:latest
 5. to seed the database -   knex seed:run
+
+
 ### Running the App
 
 Start the development server:
