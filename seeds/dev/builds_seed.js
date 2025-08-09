@@ -25,7 +25,7 @@ exports.seed = async function(knex) {
 		login_id: 'user3',
 		build_number: 3,
 		number_of_parts: 7,
-		time_per_part: 33
+		time_per_part: 3
     }
   ]);
 };

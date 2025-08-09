@@ -311,6 +311,7 @@ app.get("/save-session", async (req, res) => {
     try {
         const query = req.query;
         const { total_parts, login_id } = query;
+
         const session = await knex("sessions")
             .where({ login_id })
             .andWhere({ status: 1 })
